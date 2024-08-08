@@ -147,6 +147,13 @@ class _LoginViewState extends State<LoginView> {
         () {
           if (formKey.currentState!.validate()) {
             SystemChannels.textInput.invokeMethod('TextInput.hide');
+            if (passwordController.text != confirmPasswordController.text) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text("Password tidak sama"),
+                backgroundColor: Colors.red,
+              ));
+              return;
+            }
             context.read<LoginCubit>().login(
                   nameController.text,
                   confirmPasswordController.text,
